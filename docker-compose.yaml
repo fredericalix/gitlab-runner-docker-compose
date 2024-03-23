@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  gitlab-runner:
+    image: gitlab/gitlab-runner:latest
+    container_name: gitlab-runner
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./gitlab-runner/config:/etc/gitlab-runner
+    environment:
+      - GITLAB_RUNNER_TOKEN=${GITLAB_RUNNER_TOKEN}
+      - GITLAB_RUNNER_EXECUTOR=docker
+      - DOCKER_IMAGE=${DOCKER_DEFAULT_IMAGE}
+      - CI_SERVER_URL=${CI_SERVER_URL}
+
